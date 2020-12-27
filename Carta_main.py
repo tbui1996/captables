@@ -9,14 +9,19 @@ from datetime import date
 import calendar
 import json
 import numpy as np
-
+import sys
 filename = "test.json"
 class CSV_reader(object):
     def __init__(self):
         fileinput = str(input("Which file do you want?(Must enter full file path location):"))
         if not ".csv" in fileinput:
             fileinput += ".csv"
-        self.data = pd.read_csv(fileinput)
+            try:
+                with open(fileinput) as f:
+                    self.data = pd.read_csv(fileinput)
+            except FileNotFoundError:
+                print('File does not exist')
+                sys.exit()
 
     def readCLI(self):
         if len(sys.argv) != 2:
@@ -41,7 +46,6 @@ class CSV_reader(object):
         sharespurchased = df[0].groupby('INVESTOR')['SHARES PURCHASED'].sum()
         cashpaid = df[0].groupby('INVESTOR')['CASH PAID'].sum()
         ownership = (sharespurchased/df[2])*100
-
         summarization = df[0].groupby('INVESTOR').agg(
             shares_purchased=pd.NamedAgg(column='SHARES PURCHASED', aggfunc=sum),
             cash_paid=pd.NamedAgg(column='CASH PAID', aggfunc=sum))
@@ -54,7 +58,7 @@ class CSV_reader(object):
         ownership = self.ownership()
         ownership_tojson = ownership[3].reset_index().to_json(orient="records")
         parsed = json.loads(ownership_tojson)
-        obj ={
+        obj = {
             "date": datetime,
             "cash_raised": cashraised[1],
             "total_number_of_shares": cashraised[2],
