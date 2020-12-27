@@ -16,12 +16,12 @@ class CSV_reader(object):
         fileinput = str(input("Which file do you want?(Must enter full file path location):"))
         if not ".csv" in fileinput:
             fileinput += ".csv"
-            try:
-                with open(fileinput) as f:
-                    self.data = pd.read_csv(fileinput)
-            except FileNotFoundError:
-                print('File does not exist')
-                sys.exit()
+        try:
+            with open(fileinput) as f:
+                self.data = pd.read_csv(fileinput)
+        except FileNotFoundError:
+            print('File does not exist')
+            sys.exit()
 
     def readCLI(self):
         if len(sys.argv) != 2:
