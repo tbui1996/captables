@@ -53,18 +53,17 @@ class CSV_reader(object):
     def ownership(self):
         df = self.beginAnalyzing()
         sharespurchased = df[0].groupby('INVESTOR')['SHARES PURCHASED'].sum()
-        cashpaid = df[0].groupby('INVESTOR')['CASH PAID'].sum()
         ownership = (sharespurchased/df[2])*100
         summarization = df[0].groupby('INVESTOR').agg(shares_purchased=pd.NamedAgg(column='SHARES PURCHASED', aggfunc=sum),
                                                       cash_paid=pd.NamedAgg(column='CASH PAID', aggfunc=sum))
         summarization['ownership'] = ownership
-        return sharespurchased, cashpaid, ownership, summarization
+        return summarization
 
     def write_to_json(self):
         datetime = self.dateFormat_forJSON()
         cashraised = self.beginAnalyzing()
         ownership = self.ownership()
-        ownership_tojson = ownership[3].reset_index().to_json(orient="records")
+        ownership_tojson = ownership.reset_index().to_json(orient="records")
         parsed = json.loads(ownership_tojson)
         obj = {
             "date": datetime,
@@ -93,6 +92,6 @@ if __name__ == "__main__":
     csv = CSV_reader()
     dateinput = csv.readCLI()
     stru,x,y = csv.beginAnalyzing()
-    sharespurchased, cashpaid, ownership, summarization = csv.ownership()
+    summarization = csv.ownership()
     csv.write_to_json()
 
