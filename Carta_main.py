@@ -32,6 +32,15 @@ class CSV_reader(object):
             dt_str = datetime.datetime.strftime(dt_obj, '%Y-%m-%d')
             return dt_str
 
+    def dateFormat_forJSON(self):
+        if len(sys.argv) != 2:
+            dateobject=dt.today().strftime('%m/%d/%Y')
+            return dateobject
+        else:
+            dt_obj = datetime.datetime.strptime(sys.argv[1], '%m/%d/%Y')
+            dt_str = datetime.datetime.strftime(dt_obj, '%m/%d/%Y')
+            return dt_str
+
     def beginAnalyzing(self):
         date_tocompare_against = self.readCLI()
         date_pandas = pd.to_datetime(date_tocompare_against)
@@ -46,14 +55,13 @@ class CSV_reader(object):
         sharespurchased = df[0].groupby('INVESTOR')['SHARES PURCHASED'].sum()
         cashpaid = df[0].groupby('INVESTOR')['CASH PAID'].sum()
         ownership = (sharespurchased/df[2])*100
-        summarization = df[0].groupby('INVESTOR').agg(
-            shares_purchased=pd.NamedAgg(column='SHARES PURCHASED', aggfunc=sum),
-            cash_paid=pd.NamedAgg(column='CASH PAID', aggfunc=sum))
+        summarization = df[0].groupby('INVESTOR').agg(shares_purchased=pd.NamedAgg(column='SHARES PURCHASED', aggfunc=sum),
+                                                      cash_paid=pd.NamedAgg(column='CASH PAID', aggfunc=sum))
         summarization['ownership'] = ownership
         return sharespurchased, cashpaid, ownership, summarization
 
     def write_to_json(self):
-        datetime = self.readCLI()
+        datetime = self.dateFormat_forJSON()
         cashraised = self.beginAnalyzing()
         ownership = self.ownership()
         ownership_tojson = ownership[3].reset_index().to_json(orient="records")
@@ -86,5 +94,5 @@ if __name__ == "__main__":
     dateinput = csv.readCLI()
     stru,x,y = csv.beginAnalyzing()
     sharespurchased, cashpaid, ownership, summarization = csv.ownership()
-    (csv.write_to_json())
+    csv.write_to_json()
 
