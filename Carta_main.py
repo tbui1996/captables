@@ -39,12 +39,11 @@ class CSV_reader(object):
     def ownership(self):
         df = self.beginAnalyzing()
         sharespurchased = df[0].groupby('INVESTOR')['SHARES PURCHASED'].sum()
-        #sharespurchased = df[0].groupby('INVESTOR').apply(lambda x: x.to_json(orient='records'))
         cashpaid = df[0].groupby('INVESTOR')['CASH PAID'].sum()
         ownership = (sharespurchased/df[2])*100
 
         summarization = df[0].groupby('INVESTOR').agg(
-            shares_purchased=pd.NamedAgg(column='SHARES PURCHASED',     aggfunc=sum),
+            shares_purchased=pd.NamedAgg(column='SHARES PURCHASED', aggfunc=sum),
             cash_paid=pd.NamedAgg(column='CASH PAID', aggfunc=sum))
         summarization['ownership'] = ownership
         return sharespurchased, cashpaid, ownership, summarization
@@ -52,19 +51,14 @@ class CSV_reader(object):
     def write_to_json(self):
         datetime = self.readCLI()
         cashraised = self.beginAnalyzing()
-        cashraised_tojson = cashraised[0].to_json()
         ownership = self.ownership()
-        ownership_tojson = ownership[3].to_json(orient="index")
+        ownership_tojson = ownership[3].reset_index().to_json(orient="records")
         parsed = json.loads(ownership_tojson)
-        print(json.dumps(parsed, indent=4))
-
         obj ={
             "date": datetime,
             "cash_raised": cashraised[1],
             "total_number_of_shares": cashraised[2],
-            "ownership":[{
-                "investor": parsed
-            }]
+            "ownership": parsed
         }
         with open(filename, "w") as out_file:
             json.dump(obj, out_file, cls=NpEncoder)
@@ -86,15 +80,7 @@ class NpEncoder(json.JSONEncoder):
 if __name__ == "__main__":
     csv = CSV_reader()
     dateinput = csv.readCLI()
-    #print(dateinput+"\n")
     stru,x,y = csv.beginAnalyzing()
-    #print(stru)
-    #print(x)
-    #print(y)
-    #print(str(csv.ownership())+"\n")
     sharespurchased, cashpaid, ownership, summarization = csv.ownership()
-    #print(sharespurchased)
-    #print(cashpaid)
-    #print(ownership)
-    print((csv.write_to_json()))
+    (csv.write_to_json())
 
