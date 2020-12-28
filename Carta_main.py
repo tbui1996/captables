@@ -10,6 +10,7 @@ import calendar
 import json
 import numpy as np
 import sys
+
 filename = "test.json"
 class CSV_reader(object):
     def __init__(self):
@@ -71,7 +72,12 @@ class CSV_reader(object):
             "total_number_of_shares": cashraised[2],
             "ownership": parsed
         }
-        with open(filename, "w") as out_file:
+        #with open(filename, "w") as out_file:
+        myDir = input("Where do you want to write the file(Must specify full file path): ")
+        while not os.path.exists(myDir):
+            print("Invalid path")
+            myDir = input("Where do you want to write the file to(Must specify full file path):")
+        with open(os.path.join(myDir,filename), 'w') as out_file:
             json.dump(obj, out_file, cls=NpEncoder)
         return filename
 
