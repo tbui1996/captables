@@ -72,11 +72,13 @@ class CSV_reader(object):
             "total_number_of_shares": cashraised[2],
             "ownership": parsed
         }
-        myDir = input("Where do you want to write the file(Must specify full file path): ")
+        myDir = input("Where do you want to save the file(Must specify full file path): ")
         while not os.path.exists(myDir):
             print("Invalid path")
-            myDir = input("Where do you want to write the file to(Must specify full file path):")
-        filename = input("What would you like the output file to be called(must add .json):")
+            myDir = input("Where do you want to save the file to(Must specify full file path):")
+        filename = input("What would you like the output file to be called:")
+        if not ".json" in filename:
+            filename += ".json"
         with open(os.path.join(myDir, filename), 'w') as out_file:
             json.dump(obj, out_file, cls=NpEncoder)
         return filename
