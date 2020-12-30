@@ -14,7 +14,7 @@ import sys
 #filename = "test.json"
 class CSV_reader(object):
     def __init__(self):
-        fileinput = str(input("Which file do you want?(Must enter full file path location):"))
+        fileinput = str(input("Enter the full path and name of your capitalization .csv file. \nFor example, C:/Users/username/desktop/cartallc.csv : "))
         if not ".csv" in fileinput:
             fileinput += ".csv"
         try:
@@ -72,11 +72,11 @@ class CSV_reader(object):
             "total_number_of_shares": cashraised[2],
             "ownership": parsed
         }
-        myDir = input("Where do you want to save the file(Must specify full file path): ")
+        myDir = input("Enter the full path where you want to save the file. For example, C:/Users/username/desktop : ")
         while not os.path.exists(myDir):
             print("Invalid path")
-            myDir = input("Where do you want to save the file to(Must specify full file path):")
-        filename = input("What would you like the output file to be called:")
+            myDir = input("Enter the full path where you want to save the file. For example, C:/Users/username/desktop : ")
+        filename = input("Enter the name for your summary cap table output .json file. For example, CapTable.json : ")
         if not ".json" in filename:
             filename += ".json"
         with open(os.path.join(myDir, filename), 'w') as out_file:
