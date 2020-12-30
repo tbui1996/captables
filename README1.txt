@@ -11,6 +11,9 @@ Install PyCharm IDE
 - Launch PyCharm by typing PyCharm into search box and then selecting PyCharm xxxx to run
 - Select File > Settings > Build, Execution, Development > Console > Python Console
 - In the "Python interpreter" box, select Project Default from dropdown menu C:\Users\username\PycharmProjects\cartaproject\venv\Scripts\Python.exe
+(you can identify username by typing "echo %username%" from a command shell) 
+
+- ...
 
 Unzip THOMAS-BUI-CARTA.zip and extract three files onto your desired folder (e.g. Desktop)
 
