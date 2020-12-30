@@ -3,7 +3,7 @@ How to setup, configure and run PyCharm Python program
 Assumptions
 - Instructions are for Windows 10 platform running the latest version and updates
 - User is already familiar with Windows and IDE software development environment
-- "username" mentioned below refers to the name of the account currently logged onto
+- "username" mentioned below refers to the name of the account currently logon
   (one can identify username by typing "echo %username%" from a command shell)
 
 Install PyCharm IDE 
