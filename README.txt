@@ -6,13 +6,13 @@
 2)Setup Project
 - One installed, open PyCharm and create new project and save wherever you would like 
 - Copy the code from the zip file which is called Carta_main.py, and paste that over the auto created main.py
-- Once the code is copied over, the user will need to download these libraries:
+- Once the code is copied over, the user will need to install these libraries:
 	os
 	pandas as pd
 	datetime
 	datetime 
 	json
-	numpy as np
+	numpy 
 	sys
 - Rename the file to Carta_main.py and at the top, click on Run and then Edit configurations
 - Make sure the Script path is set to where you saved your project AND includes the Carta_main.py (should look something like C:\Users\Family\PycharmProjects\cartallc\Carta_main.py)
