@@ -8,7 +8,7 @@
 - Copy the code from the zip file which is called Carta_main.py, and paste that over the auto created main.py
 - Once the code is copied over, the user will need to install these libraries:
 	os
-	pandas as pd
+	pandas
 	datetime
 	datetime 
 	json
