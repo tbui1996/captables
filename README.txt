@@ -9,7 +9,6 @@
 - Once the code is copied over, the user will need to install these libraries:
 	os
 	pandas
-	datetime
 	datetime 
 	json
 	numpy 
