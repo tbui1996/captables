@@ -1,5 +1,6 @@
 Key Design Decisions
-I chose Python because of the Pandas library which includes many functions that make it simpler to do data analysis. This library allows for importing csv files, data aggregation, and outputting to json format. I follow Bob Martin’s “Clean Code” methodology where functions are less than 7 lines and no comments explaining what the code does. The descriptive variables and function names should be self-explanatory to any software engineer. 
+I chose Python because of the Pandas library which includes many functions that make it simpler to do data analysis.
+This library allows for importing csv files, data aggregation, and outputting to json format. I follow Bob Martin’s “Clean Code” methodology where functions are less than 7 lines and no comments explaining what the code does. The descriptive variables and function names should be self-explanatory to any software engineer. 
 
 
 1) Install PyCharm IDE 

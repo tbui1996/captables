@@ -1,20 +1,14 @@
-import sys
-import csv
 import os
-from itertools import combinations
 import pandas as pd
 import datetime
 from datetime import datetime as dt
-from datetime import date
-import calendar
 import json
 import numpy as np
 import sys
 
-#filename = "test.json"
 class CSV_reader(object):
     def __init__(self):
-        fileinput = str(input("Enter the full path and name of your capitalization .csv file. \nFor example, C:/Users/username/desktop/cartallc.csv : "))
+        fileinput = str(input("Which file do you want?(Must enter full file path location):"))
         if not ".csv" in fileinput:
             fileinput += ".csv"
         try:
@@ -26,7 +20,7 @@ class CSV_reader(object):
 
     def readCLI(self):
         if len(sys.argv) != 2:
-            dateobject=dt.today().strftime('%Y-%m-%d')
+            dateobject = dt.today().strftime('%Y-%m-%d')
             return dateobject
         else:
             dt_obj = datetime.datetime.strptime(sys.argv[1], '%m/%d/%Y')
@@ -51,7 +45,7 @@ class CSV_reader(object):
         total_number_of_shares = df['SHARES PURCHASED'].sum()
         return df, cash_raised, total_number_of_shares
 
-    def ownership(self):
+    def Build_DataTable(self):
         df = self.beginAnalyzing()
         sharespurchased = df[0].groupby('INVESTOR')['SHARES PURCHASED'].sum()
         ownership = (sharespurchased/df[2])*100
@@ -63,15 +57,19 @@ class CSV_reader(object):
     def write_to_json(self):
         datetime = self.dateFormat_forJSON()
         cashraised = self.beginAnalyzing()
-        ownership = self.ownership()
+        ownership = self.Build_DataTable()
         ownership_tojson = ownership.reset_index().to_json(orient="records")
-        parsed = json.loads(ownership_tojson)
-        obj = {
+        parsed_data = json.loads(ownership_tojson)
+        output_jsonfile = {
             "date": datetime,
             "cash_raised": cashraised[1],
             "total_number_of_shares": cashraised[2],
-            "ownership": parsed
+            "ownership": parsed_data
         }
+        return output_jsonfile
+
+    def AskUserForOutputFileLocationAndFileName(self):
+        jsonfile_output = self.write_to_json()
         myDir = input("Enter the full path where you want to save the file. For example, C:/Users/username/desktop : ")
         while not os.path.exists(myDir):
             print("Invalid path")
@@ -80,7 +78,7 @@ class CSV_reader(object):
         if not ".json" in filename:
             filename += ".json"
         with open(os.path.join(myDir, filename), 'w') as out_file:
-            json.dump(obj, out_file, cls=NpEncoder)
+            json.dump(jsonfile_output, out_file, cls=NpEncoder)
         return filename
 
 
@@ -95,10 +93,11 @@ class NpEncoder(json.JSONEncoder):
         else:
             return super(NpEncoder, self).default(obj)
 
-#used mainly for debugging#
+
 if __name__ == "__main__":
     csv = CSV_reader()
     dateinput = csv.readCLI()
-    stru,x,y = csv.beginAnalyzing()
-    summarization = csv.ownership()
+    stru, x, y = csv.beginAnalyzing()
+    summarization = csv.Build_DataTable()
     csv.write_to_json()
+    csv.AskUserForOutputFileLocationAndFileName()
