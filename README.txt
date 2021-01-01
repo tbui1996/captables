@@ -1,3 +1,11 @@
+Key Design Decisions
+I chose to use python because of the Pandas library which includes many functions that make it simpler to do data analysis. 
+This library allowed for importing csv files, data aggregation, and outputting json files. 
+In terms of my code, I tried my best to follow Bob Martins clean code where functions should be less than 7 lines and
+that there should not be any comments in the code explaining what my code does. If my code is written well enough
+it should explain itself, thus making comments unnecessary and redundant. 
+
+
 1) Install PyCharm IDE 
 - Visit https://www.jetbrains.com/pycharm/download/ to download PyCharm for Windows
 - Click on the Download button  
@@ -36,15 +44,6 @@
 	IF INVALID: program will ask user to input a valid file path location again, until they input a correct file path
 - If file path is valid, the program will then ask the user what they would like the output file to be called (i.e test.json)
 - If all done correctly, the file output shall be saved to wherever the user prompted and will have the correct json information
-
-
-
-Key Design Decisions
-I chose to use python because of the Pandas library which includes many functions that make it simpler to do data analysis. 
-This library allowed for importing csv files, data aggregation, and outputting json files. 
-In terms of my code, I tried my best to follow Bob Martins clean code where functions should be less than 7 lines and
-that there should not be any comments in the code explaining what my code does. If my code is written well enough
-it should explain itself, thus making comments unnecessary and redundant. 
 
 
 Assumptions
