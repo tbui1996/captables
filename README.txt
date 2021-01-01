@@ -43,11 +43,14 @@ Key Design Decisions
 I chose to use python because of the Pandas library which includes many functions that make it simpler to do data analysis. 
 This library allowed for importing csv files, data aggregation, and outputting json files. 
 In terms of my code, I tried my best to follow Bob Martins clean code where functions should be less than 7 lines and
-that there should not be any comments in the code explaining what my code does. Because if my code is written well enough
-it should explain itself, thus making comment unnecessary. 
+that there should not be any comments in the code explaining what my code does. If my code is written well enough
+it should explain itself, thus making comments unnecessary and redundant. 
 
 
 Assumptions
-I made the assumption the user has some technical experience but not to much, which is why I made the documentation as detailed as possible.
+- I made the assumption the user has some technical experience but not to much, which is why I made the documentation as detailed as possible.
+- I made the assumption that the user will input a CSV file that is formatted correctly and has all the correct columns and row values. 
+- I made the assumption that the user will input a valid date format and input a date format that follows the one stated earlier
+
 
 
