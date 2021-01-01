@@ -8,7 +8,7 @@ import sys
 
 class CSV_reader(object):
     def __init__(self):
-        fileinput = str(input("Which file do you want?(Must enter full file path location):"))
+        fileinput = str(input("Enter the full path and name of your capitalization .csv file: "))
         if not ".csv" in fileinput:
             fileinput += ".csv"
         try:
